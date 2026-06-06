@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PostgrestSingleResponse } from '@supabase/supabase-js';
-import { SupabaseService } from 'supabase/supabase.service';
+import { SupabaseService } from 'src/supabase/supabase.service';
 import { Captions } from '@generated/api/models/captions';
 
 @Injectable()

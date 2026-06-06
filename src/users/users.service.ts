@@ -1,6 +1,6 @@
 import { Credentials } from '@generated/api/models/credentials';
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
-import { SupabaseService } from 'supabase/supabase.service';
+import { SupabaseService } from 'src/supabase/supabase.service';
 
 export interface IUser {
   id: string;

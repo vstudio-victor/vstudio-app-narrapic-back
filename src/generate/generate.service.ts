@@ -2,8 +2,8 @@ import Anthropic from '@anthropic-ai/sdk';
 import { ContentResponse } from '@generated/api/models/content-response';
 import { Generate } from '@generated/api/models/generate';
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { GenerationsService } from 'supabase/generations.service';
-import { SupabaseService } from 'supabase/supabase.service';
+import { GenerationsService } from 'src/supabase/generations.service';
+import { SupabaseService } from 'src/supabase/supabase.service';
 
 @Injectable()
 export class GenerateService {
