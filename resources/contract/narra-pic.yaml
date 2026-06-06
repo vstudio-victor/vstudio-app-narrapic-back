@@ -1,0 +1,350 @@
+openapi: 3.0.3
+info:
+  title: NarraPic API
+  version: 1.0.0
+paths:
+  /subscribe/{id}:
+    post:
+      tags:
+        - users
+      summary: Subscribe to NarraPic
+      operationId: subscribe
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Subscribed
+  /generate:
+    post:
+      tags:
+        - Generate
+      summary: Generate your caption
+      operationId: generate
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Generate'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContentResponse'
+  /captions:
+    get:
+      tags:
+        - Captions
+      summary: Get all captions
+      operationId: getCaptions
+      parameters:
+        - name: userId
+          in: query
+          required: false
+          description: Filter captions by user ID
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Captions retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Captions'
+  /captions/{id}:
+    get:
+      tags:
+        - Captions
+      summary: Get caption by ID
+      operationId: getCaptionById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Caption ID
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Caption retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Captions'
+        '404':
+          description: Caption not found
+  /signUp:
+    post:
+      tags:
+        - users
+      summary: Create account
+      operationId: signUp
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Credentials'
+      responses:
+        '200':
+          description: Account created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '400':
+          description: Bad request
+  /login:
+    post:
+      tags:
+        - users
+      summary: Login to account
+      operationId: login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginCredentials'
+      responses:
+        '200':
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '401':
+          description: Invalid credentials
+  /logout:
+    post:
+      tags:
+        - users
+      summary: Logout from account
+      operationId: logout
+      security:
+        - bearerAuth: []
+      responses:
+        '204':
+          description: Logout successful
+        '401':
+          description: Unauthorized
+  /refresh-token:
+    post:
+      tags:
+        - users
+      summary: Refresh access token
+      operationId: refreshToken
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RefreshTokenRequest'
+      responses:
+        '200':
+          description: Token refreshed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '401':
+          description: Invalid or expired refresh token
+  /user:
+    get:
+      tags:
+        - users
+      summary: Get current user profile
+      operationId: getCurrentUser
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: User profile
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          description: Unauthorized
+    patch:
+      tags:
+        - users
+      summary: Update user
+      operationId: updateUser
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUser'
+      responses:
+        '200':
+          description: User updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          description: Unauthorized
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426614174000
+        email:
+          type: string
+          format: email
+          example: user@example.com
+        name:
+          type: string
+          example: John Doe
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+    Captions:
+      allOf:
+        - $ref: '#/components/schemas/ContentResponse'
+        - type: object
+          properties:
+            image_url:
+              type: string
+              example: "base64 image like /9j/4AAQSkZJRgABAQEAYABgAAD..."
+            created_at:
+              type: string
+              format: date
+    ContentResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426614174000
+        description:
+          type: string
+          example: There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet.
+        shortCaption:
+          type: string
+          example: The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested
+        platform:
+          type: string
+          example: The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested
+        altText:
+          type: string
+          example: It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. 
+        hashtags:
+          type: array
+          items:
+            type: string
+          example: [
+            "#automotiveart",
+            "#carphotography",
+            "#automotivephotography",
+            "#artforsale",
+            "#fineartphotography"]
+    UpdateUser:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 2
+          example: John Updated
+        email:
+          type: string
+          format: email
+          example: newemail@example.com
+    Credentials:
+      type: object
+      properties:
+        phone:
+          type: string
+          example: +64575839928
+        email:
+          type: string
+          format: email
+          example: user@example.com
+        password:
+          type: string
+          example: securePassword123
+        channel:
+          $ref: '#/components/schemas/Channel'
+    LoginCredentials:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          format: email
+          example: user@example.com
+        password:
+          type: string
+          example: securePassword123
+    AuthResponse:
+      type: object
+      properties:
+        access_token:
+          type: string
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+        refresh_token:
+          type: string
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+        expires_in:
+          type: number
+          example: 3600
+        token_type:
+          type: string
+          example: bearer
+        user:
+          $ref: '#/components/schemas/User'
+    RefreshTokenRequest:
+      type: object
+      required:
+        - refresh_token
+      properties:
+        refresh_token:
+          type: string
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+    Channel:
+      type: string
+      enum: ['sms', 'whatsapp']
+    Style:
+      type: string
+      enum: ['ltz_insp_eng', 'ltz_pro', 'ltz_casual', 'ltz_promo']
+    Platform:
+      type: string
+      enum: ['ltz_insta', 'ltz_tiktok']
+    Generate:
+      type: object
+      properties:
+        image_url:
+          type: string
+        prompt:
+          type: string
+          example: Lorem ipsum dolores absentum
+        platform:
+          $ref: '#/components/schemas/Platform'
+        style:
+          $ref: '#/components/schemas/Style'

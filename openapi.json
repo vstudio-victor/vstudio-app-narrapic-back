@@ -1,0 +1,50 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/api": {
+      "get": {
+        "operationId": "AppController_getHello",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "App"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "Creator AI API",
+    "description": "API for generating social media content",
+    "version": "1.0",
+    "contact": {}
+  },
+  "tags": [
+    {
+      "name": "generations",
+      "description": ""
+    },
+    {
+      "name": "auth",
+      "description": ""
+    },
+    {
+      "name": "users",
+      "description": ""
+    }
+  ],
+  "servers": [],
+  "components": {
+    "securitySchemes": {
+      "bearer": {
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "type": "http"
+      }
+    },
+    "schemas": {}
+  }
+}
