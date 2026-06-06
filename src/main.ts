@@ -11,10 +11,14 @@ async function bootstrap() {
 
   app.use(json({ limit: '50mb' }));
   app.use(urlencoded({ extended: true, limit: '50mb' }));
-  
+
   dotenv.config();
   app.enableCors({
-    origin: ['http://localhost:4200', 'http://localhost:4201'],
+    origin: [
+      'http://localhost:4200',
+      'http://localhost:4201',
+      'https://vstudio-app-narrapic-front.vercel.app',
+    ],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
