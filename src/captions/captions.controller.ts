@@ -7,7 +7,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { CaptionsService } from './captions.service';
-import { Captions } from '@generated/api/models/captions';
+import { Captions } from '../../generated/api/models/captions';
 import { AuthGuard } from 'src/guards/auth.guard';
 
 @ApiTags('captions')

@@ -5,9 +5,9 @@ import {
   SupabaseClient,
 } from '@supabase/supabase-js';
 import { SupabaseService } from './supabase.service';
-import { Generate } from '@generated/api/models/generate';
+import { Generate } from '../../generated/api/models/generate';
 import { Database } from 'src/types/database.types';
-import { ContentResponse } from '@generated/api/models/content-response';
+import { ContentResponse } from '../../generated/api/models/content-response';
 
 type Generation = Database['public']['Tables']['Generations']['Row'];
 type ContentGenerated = Database['public']['Tables']['ContentGenerated']['Row'];

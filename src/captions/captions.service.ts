@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PostgrestSingleResponse } from '@supabase/supabase-js';
 import { SupabaseService } from 'src/supabase/supabase.service';
-import { Captions } from '@generated/api/models/captions';
+import { Captions } from '../../generated/api/models/captions';
 
 @Injectable()
 export class CaptionsService {
