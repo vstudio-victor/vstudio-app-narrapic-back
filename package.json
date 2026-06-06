@@ -8,7 +8,7 @@
   "scripts": {
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start:prod": "node dist/src/main.js",
-    "build": "npm run generate:api && nest build",
+    "build": "npm run generate:api && nest build && tsc-alias",
     "generate:api": "npm run generate:api:create-models && npm run generate:api:transform-services",
     "generate:api:transform-services": "node ./scripts/transform-openapi-services.js --path resources/contract/narra-pic.yaml",
     "generate:api:create-models": "node ./scripts/api-generator.js --path resources/contract/narra-pic.yaml",
@@ -65,6 +65,7 @@
     "ts-jest": "^29.2.5",
     "ts-loader": "^9.5.2",
     "ts-node": "^10.9.2",
+    "tsc-alias": "^1.8.17",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.20.0"

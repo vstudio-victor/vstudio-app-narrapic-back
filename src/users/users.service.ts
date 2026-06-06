@@ -1,4 +1,4 @@
-import { Credentials } from '@generated/api/models/credentials';
+import { Credentials } from '../../generated/api/models/credentials';
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { SupabaseService } from 'src/supabase/supabase.service';
 
@@ -84,7 +84,7 @@ export class UsersService {
         );
       }
 
-      console.log('data', data.user)
+      console.log('data', data.user);
       return data.user;
     }
   }
@@ -119,7 +119,7 @@ export class UsersService {
       throw new Error(error.message);
     }
 
-    console.log('toto')
+    console.log('toto');
 
     return { message: 'Logged out successfully' };
   }

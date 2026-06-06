@@ -15,10 +15,9 @@ import {
   ApiBearerAuth,
 } from '@nestjs/swagger';
 import { UsersService } from './users.service';
-import { Credentials } from '@generated/api/models/credentials';
 import { AuthGuard } from '../guards/auth.guard';
 import { CurrentUser } from '../decorators/current-user.decorator';
-
+import { Credentials } from '../../generated/api/models/credentials';
 @ApiTags('users')
 @Controller()
 export class UsersController {
